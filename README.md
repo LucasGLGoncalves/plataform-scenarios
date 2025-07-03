@@ -1,73 +1,53 @@
-# Plataforma de Cenários Terraform na DigitalOcean
+# 🌐 Plataforma de Cenários com Terraform
 
-Este projeto utiliza Terraform para provisionar e configurar automaticamente recursos na DigitalOcean, como droplets e regras de firewall, com foco em simplicidade e reprodutibilidade.
+Este repositório é um espaço para **experimentações com Terraform**, focado na criação de infraestrutura na [DigitalOcean](https://www.digitalocean.com/).
 
-## Requisitos
+## 🔧 Objetivo
 
-* [Terraform](https://www.terraform.io/) >= 1.0
-* Conta na [DigitalOcean](https://www.digitalocean.com/)
-* Token de API da DigitalOcean
-* Chave SSH registrada na DigitalOcean
+Explorar, testar e validar configurações de infraestrutura como código (IaC) usando o Terraform.
 
-## Visão Geral
+## 📦 Recursos Provisionados
 
-Os principais recursos provisionados incluem:
+Atualmente, o projeto inclui:
 
 * **Droplet Ubuntu 24.04**
 
-  * Localização: `nyc2`
+  * Local: `nyc2`
   * Tamanho: `s-1vcpu-512mb-10gb`
-  * Backups automáticos habilitados com política semanal
+  * Backups habilitados com política semanal
+* **Firewall DigitalOcean**
 
-* **Firewall Personalizado**
+  * Portas liberadas: `22`, `80`, `443`
+  * Regras de saída para `DNS`, `HTTP`, `HTTPS` e `SSH`
 
-  * Acesso liberado nas portas 22 (SSH), 80 (HTTP) e 443 (HTTPS)
-  * Regras de saída para DNS, HTTP, HTTPS e SSH
+## 🚀 Como usar
 
-## Estrutura de Arquivos
+1. Clone o repositório:
 
-* `main.tf`: Configuração do provedor e criação do droplet
-* `resources.tf`: Configuração do firewall
-* `terraform.tfvars`: Definições de variáveis (token e nome da chave SSH)
-* `.terraform.lock.hcl`: Controle de versões dos provedores
+   ```bash
+   git clone https://github.com/seu-usuario/plataform-scenarios.git
+   cd plataform-scenarios
+   ```
 
-## Como Usar
+2. Configure seu arquivo `terraform.tfvars`:
 
-### 1. Clone o repositório
+   ```hcl
+   DO_TOKEN     = "seu_token_da_digitalocean"
+   SSH_KEY_NAME = "nome_da_chave_ssh_registrada"
+   ```
 
-```bash
-git clone https://github.com/seu-usuario/plataform-scenarios.git
-cd plataform-scenarios
-```
+3. Inicialize e aplique:
 
-### 2. Configure variáveis sensíveis
+   ```bash
+   terraform init
+   terraform apply
+   ```
 
-Crie um arquivo `terraform.tfvars` com:
+## 📤 Saídas
 
-```hcl
-DO_TOKEN = "seu_token_aqui"
-SSH_KEY_NAME = "nome_da_chave_ssh"
-```
+* IP do droplet será exibido ao final do processo (`output "droplet_ip"`).
 
-Ou configure como variáveis de ambiente:
+## 🧪 Notas
 
-```bash
-export TF_VAR_DO_TOKEN="seu_token_aqui"
-export TF_VAR_SSH_KEY_NAME="nome_da_chave_ssh"
-```
-
-### 3. Inicialize e aplique
-
-```bash
-terraform init
-terraform apply
-```
-
-## Saídas
-
-* IP público do droplet criado, exibido após o `apply`.
-
-## Notas
-
-* Este projeto usa o provedor `digitalocean` versão `~> 2.0`.
-* As chaves SSH devem estar previamente registradas na DigitalOcean com o nome exato usado.
+* Este projeto é **experimental** e os recursos podem mudar frequentemente.
+* Usando o provedor `digitalocean` versão `~> 2.0`.
